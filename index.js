@@ -2,20 +2,24 @@
  * Chat Assistant Module
  * Módulo de chat con IA Gemini para integrar en aplicaciones SolidJS
  * 
- * @author Tu Nombre
- * @version 1.0.0
+ * @author meliss2025
+ * @version 1.2.0
  */
 
 // Componentes principales
-export { default as ChatAssistant } from './components/ChatAssistant';
-export { default as FloatingChat } from './components/FloatingChat';
+export { default as ChatAssistant } from './components/ChatAssistant.jsx';
+export { default as FloatingChat } from './components/FloatingChat.jsx';
+export { default } from './components/FloatingChat.jsx';
 
 // Hook personalizado
-export { default as useGeminiChat } from './hooks/useGeminiChat';
+export { default as useGeminiChat } from './hooks/useGeminiChat.js';
 
 // Utilidades de API
-export { sendPrompt, sendPromptDirect, sendPromptToBackend, uploadAndProcess } from './utils/geminiApi';
+export { sendPrompt, sendPromptDirect, sendPromptToBackend, uploadAndProcess } from './utils/geminiApi.js';
 
-// Estilos (deben ser importados manualmente en el proyecto)
-// import './chat-assistant-module/styles/ChatAssistant.css';
-// import './chat-assistant-module/styles/FloatingChat.css';
+// Configuración por defecto
+export { default as defaultConfig } from './config.js';
+
+// Los estilos se importan automáticamente
+import './styles/ChatAssistant.css';
+import './styles/FloatingChat.css';

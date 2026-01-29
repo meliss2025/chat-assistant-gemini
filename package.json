@@ -1,0 +1,47 @@
+{
+  "name": "chat-assistant-gemini",
+  "version": "1.2.0",
+  "description": "Módulo de chat asistente con Gemini AI para SolidJS - Sin backend requerido",
+  "main": "index.js",
+  "type": "module",
+  "keywords": [
+    "solidjs",
+    "chat",
+    "gemini",
+    "ai",
+    "chatbot",
+    "assistant",
+    "google-ai",
+    "floating-chat",
+    "chat-widget"
+  ],
+  "author": "meliss2025",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/meliss2025/chat-assistant-gemini.git"
+  },
+  "homepage": "https://github.com/meliss2025/chat-assistant-gemini#readme",
+  "bugs": {
+    "url": "https://github.com/meliss2025/chat-assistant-gemini/issues"
+  },
+  "peerDependencies": {
+    "solid-js": "^1.9.0"
+  },
+  "dependencies": {
+    "axios": "^1.7.2",
+    "marked": "^9.1.6"
+  },
+  "files": [
+    "components/**/*",
+    "hooks/**/*",
+    "utils/**/*",
+    "styles/**/*",
+    "config.js",
+    "index.js",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}

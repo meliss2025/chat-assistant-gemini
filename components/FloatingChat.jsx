@@ -1,3 +1,8 @@
+/**
+ * FloatingChat Component - SolidJS
+ * Este componente usa SolidJS, NO React
+ * Primitivas: createSignal, Show
+ */
 import { createSignal, Show } from 'solid-js';
 import ChatAssistant from './ChatAssistant';
 import '../styles/FloatingChat.css';

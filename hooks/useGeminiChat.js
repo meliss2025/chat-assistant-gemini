@@ -1,3 +1,7 @@
+/**
+ * useGeminiChat Hook - SolidJS
+ * Este hook usa createSignal de SolidJS, NO useState de React
+ */
 import { createSignal } from 'solid-js';
 import { sendPrompt } from '../utils/geminiApi';
 

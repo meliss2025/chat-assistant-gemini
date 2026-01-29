@@ -1,6 +1,18 @@
 # Chat Assistant Gemini
 
+⚠️ **IMPORTANTE: Este módulo está diseñado para SolidJS, NO para React**
+
 Módulo de chat asistente con Gemini AI para aplicaciones SolidJS. Sin backend requerido, se conecta directamente a la API de Google Gemini.
+
+## ⚡ Framework
+
+Este paquete usa **SolidJS** con las siguientes primitivas:
+- `createSignal` - Estado reactivo
+- `createEffect` - Efectos secundarios
+- `For` - Renderizado de listas
+- `Show` - Renderizado condicional
+
+**NO es compatible con React**. Para React, necesitarías adaptar el código.
 
 ## 🚀 Instalación
 

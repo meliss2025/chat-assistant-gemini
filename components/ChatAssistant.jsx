@@ -1,3 +1,8 @@
+/**
+ * ChatAssistant Component - SolidJS
+ * Este componente usa SolidJS, NO React
+ * Primitivas: createSignal, createEffect, For, Show
+ */
 import { createSignal, createEffect, For, Show } from 'solid-js';
 import useGeminiChat from '../hooks/useGeminiChat';
 import { marked } from 'marked';

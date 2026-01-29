@@ -4,14 +4,23 @@ Módulo de chat asistente con Gemini AI para aplicaciones SolidJS. Sin backend r
 
 ## 🚀 Instalación
 
+Instala directamente desde GitHub:
+
 ```bash
-npm install chat-assistant-gemini
+npm install meliss2025/chat-assistant-gemini
 ```
 
 o con pnpm:
 
 ```bash
-pnpm add chat-assistant-gemini
+pnpm add meliss2025/chat-assistant-gemini
+```
+
+Para instalar una versión o rama específica:
+
+```bash
+npm install meliss2025/chat-assistant-gemini#main
+pnpm add meliss2025/chat-assistant-gemini#v1.2.0
 ```
 
 ## 📋 Requisitos Previos
@@ -211,7 +220,7 @@ MIT License - ver el archivo [LICENSE](LICENSE) para más detalles.
 ## 🔗 Links
 
 - **GitHub**: https://github.com/meliss2025/chat-assistant-gemini
-- **NPM**: https://www.npmjs.com/package/chat-assistant-gemini
+- **Instalación**: `npm install meliss2025/chat-assistant-gemini`
 - **Google AI Studio**: https://makersuite.google.com/app/apikey
 - **SolidJS**: https://www.solidjs.com/
 

@@ -1,6 +1,6 @@
 {
   "name": "chat-assistant-gemini",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Módulo de chat asistente con Gemini AI para SolidJS - Sin backend requerido",
   "main": "index.js",
   "types": "index.d.ts",

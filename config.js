@@ -4,7 +4,7 @@
  * IMPORTANTE: Copia este archivo a tu proyecto y ajusta los valores
  */
 
-export const chatConfig = {
+const chatConfig = {
   // ===== OPCIÓN 1: Conexión directa a Gemini API (SIN servidor backend) =====
   // Usa esto si NO tienes un servidor backend
   useBackend: false,
@@ -20,6 +20,9 @@ export const chatConfig = {
   position: 'right', // Posición del botón flotante: 'right' o 'left'
   buttonColor: '#0072ff', // Color del botón flotante
 };
+
+export default chatConfig;
+export { chatConfig };
 
 /**
  * IMPORTANTE SOBRE LA API KEY:

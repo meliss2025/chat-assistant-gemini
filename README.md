@@ -40,13 +40,113 @@ pnpm add meliss2025/chat-assistant-gemini#v1.2.0
 1. **API Key de Google Gemini**: Obtén tu clave en [Google AI Studio](https://makersuite.google.com/app/apikey)
 2. **SolidJS**: El módulo requiere SolidJS ^1.9.0 como peer dependency
 
+## ⚙️ Configuración Inicial (IMPORTANTE)
+
+Después de instalar el módulo, **debes configurar Vite** para que procese correctamente los archivos JSX del módulo:
+
+### 1. Configurar vite.config.js/ts
+
+Abre tu archivo `vite.config.js` o `vite.config.ts` y aplica la siguiente configuración:
+
+```javascript
+import { defineConfig } from 'vite';
+import solidPlugin from 'vite-plugin-solid';
+
+export default defineConfig({
+  plugins: [
+    solidPlugin({
+      // Permitir que el plugin procese todas las extensiones JSX/JS
+      extensions: ['.jsx', '.tsx', '.js', '.ts']
+    })
+  ],
+  
+  // Configuración para manejar el módulo desde node_modules
+  optimizeDeps: {
+    // Previene el pre-bundling del módulo
+    exclude: ['chat-assistant-gemini']
+  },
+  
+  // Forzar a Vite a procesar el módulo como ESM
+  ssr: {
+    noExternal: ['chat-assistant-gemini']
+  },
+  
+  // Priorizar las condiciones de Solid
+  resolve: {
+    conditions: ['solid', 'browser', 'development']
+  }
+});
+```
+
+**⚠️ Sin esta configuración verás el error:** `Uncaught ReferenceError: React is not defined`
+
+### 2. Posicionar el componente correctamente
+
+Para que el botón flotante **siempre esté visible**, colócalo **fuera de cualquier renderizado condicional** en tu componente principal:
+
+```jsx
+import FloatingChat, { ChatConfig } from 'chat-assistant-gemini';
+
+function App() {
+  const [ready, setReady] = createSignal(false);
+  
+  const chatConfig: ChatConfig = {
+    useBackend: false,
+    apiKey: 'TU_API_KEY',
+    model: 'gemini-2.5-flash',
+    position: 'right',
+    buttonColor: '#6366f1'
+  };
+
+  return (
+    <>
+      {/* ✅ CORRECTO: El componente siempre está visible */}
+      <FloatingChat config={chatConfig} />
+      
+      {/* Contenido condicional de tu app */}
+      {!ready() ? (
+        <div>Cargando...</div>
+      ) : (
+        <div>Tu aplicación</div>
+      )}
+    </>
+  );
+}
+```
+
+❌ **INCORRECTO** - El botón desaparecerá:
+```jsx
+// ❌ NO hagas esto
+return (
+  <>
+    {!ready() ? (
+      <div>
+        <div>Cargando...</div>
+        <FloatingChat config={chatConfig} />  {/* Se oculta cuando ready es true */}
+      </div>
+    ) : (
+      <div>Contenido</div>
+    )}
+  </>
+);
+```
+
+### 3. Reiniciar el servidor de desarrollo
+
+Después de modificar `vite.config.js`:
+
+```bash
+# Detén el servidor actual (Ctrl+C)
+pnpm dev  # o npm run dev
+```
+
 ## 💻 Uso Básico
 
 ```jsx
-import FloatingChat from 'chat-assistant-gemini';
+import FloatingChat, { ChatConfig } from 'chat-assistant-gemini';
 
 function App() {
-  const chatConfig = {
+  const chatConfig: ChatConfig = {
     useBackend: false,
     apiKey: 'TU_API_KEY_DE_GEMINI',
     model: 'gemini-2.5-flash',
@@ -135,7 +235,7 @@ Y retornar:
 
 ```jsx
 import { render } from 'solid-js/web';
-import FloatingChat from 'chat-assistant-gemini';
+import FloatingChat, { ChatConfig } from 'chat-assistant-gemini';
 import Dashboard from './Dashboard';
 
 function App() {

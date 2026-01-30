@@ -11,10 +11,10 @@ import axios from 'axios';
  * Enviar prompt a Gemini API directamente
  * @param {string} prompt - El texto a enviar
  * @param {string} apiKey - API Key de Google Gemini
- * @param {string} model - Modelo a usar (gemini-1.5-flash, gemini-1.5-pro, gemini-pro, etc.)
+ * @param {string} model - Modelo a usar (gemini-2.5-flash, gemini-2.5-pro, gemini-1.5-flash, gemini-1.5-pro, gemini-pro, etc.)
  * @returns {Promise<object>} Respuesta de Gemini
  */
-export const sendPromptDirect = async (prompt, apiKey, model = 'gemini-1.5-flash') => {
+export const sendPromptDirect = async (prompt, apiKey, model = 'gemini-2.5-flash') => {
   if (!apiKey) {
     throw new Error('🔑 API Key no configurada. Por favor, proporciona tu GEMINI_API_KEY.');
   }
@@ -60,7 +60,7 @@ export const sendPromptDirect = async (prompt, apiKey, model = 'gemini-1.5-flash
     
     // Manejo de errores específicos
     if (err?.response?.status === 404) {
-      throw new Error(`❌ Modelo "${model}" no encontrado. Usa: gemini-1.5-flash, gemini-1.5-pro, o gemini-pro`);
+      throw new Error(`❌ Modelo "${model}" no encontrado. Usa: gemini-2.5-flash, gemini-2.5-pro, gemini-1.5-flash, gemini-1.5-pro, o gemini-pro`);
     }
     
     if (err?.response?.status === 429) {

@@ -1,0 +1,87 @@
+/**
+ * Ejemplo de archivo de declaración de tipos TypeScript
+ * 
+ * Si tu proyecto usa TypeScript y encuentras el error:
+ * "No se encontró ningún archivo de declaración para el módulo 'chat-assistant-gemini'"
+ * 
+ * Puedes crear este archivo en la carpeta src/ de tu proyecto como:
+ * src/chat-assistant-gemini.d.ts
+ * 
+ * NOTA: Este archivo está incluido en el paquete npm (index.d.ts), pero si necesitas
+ * personalizarlo o agregarlo manualmente a tu proyecto, usa este ejemplo.
+ */
+
+declare module 'chat-assistant-gemini' {
+  import { Component } from 'solid-js';
+  
+  /**
+   * Configuración del chat asistente
+   */
+  export interface ChatConfig {
+    /**
+     * Si usar un backend propio o llamar directamente a Gemini
+     */
+    useBackend?: boolean;
+
+    /**
+     * URL del backend personalizado (solo si useBackend es true)
+     */
+    backendUrl?: string;
+
+    /**
+     * API Key de Google Gemini (solo si useBackend es false)
+     */
+    apiKey?: string;
+
+    /**
+     * Modelo de Gemini a usar
+     */
+    model?: 'gemini-2.5-flash' | 'gemini-2.5-pro' | 'gemini-1.5-flash' | 'gemini-1.5-pro' | 'gemini-pro';
+
+    /**
+     * Posición del botón flotante
+     */
+    position?: 'left' | 'right';
+
+    /**
+     * Color del botón flotante
+     */
+    buttonColor?: string;
+  }
+  
+  /**
+   * Props para el componente FloatingChat
+   */
+  export interface FloatingChatProps {
+    config: ChatConfig;
+  }
+  
+  /**
+   * Componente de chat flotante (export por defecto)
+   */
+  const FloatingChat: Component<FloatingChatProps>;
+  export default FloatingChat;
+
+  /**
+   * Componente principal de chat
+   */
+  export const ChatAssistant: Component<FloatingChatProps>;
+
+  /**
+   * Hook para integración con Gemini
+   */
+  export function useGeminiChat(config: ChatConfig): any;
+
+  /**
+   * Utilidades de API
+   */
+  export function sendPrompt(prompt: string, config: ChatConfig): Promise<{ text: string }>;
+  export function sendPromptDirect(prompt: string, config: ChatConfig): Promise<{ text: string }>;
+  export function sendPromptToBackend(prompt: string, config: ChatConfig): Promise<{ text: string }>;
+  export function uploadAndProcess(file: File, prompt: string, config: ChatConfig): Promise<{ text: string }>;
+
+  /**
+   * Configuración por defecto
+   */
+  export const defaultConfig: ChatConfig;
+}

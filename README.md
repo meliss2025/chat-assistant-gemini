@@ -197,6 +197,163 @@ Usa uno de los modelos válidos: `gemini-2.5-flash`, `gemini-2.5-pro`, `gemini-1
 
 Asegúrate de importar los estilos (se importan automáticamente con el componente)
 
+### Error de TypeScript con módulos sin declaraciones de tipos
+
+Si encuentras un error similar a:
+```
+No se encontró ningún archivo de declaración para el módulo 'chat-assistant-gemini'
+```
+
+**Solución:**
+
+1. Intenta instalar los tipos oficiales desde DefinitelyTyped:
+   ```bash
+   pnpm add -D @types/chat-assistant-gemini
+   ```
+
+2. Si no existen tipos oficiales (el comando falla), crea un archivo de declaración de tipos:
+   
+   - Crea un archivo `chat-assistant-gemini.d.ts` en la carpeta `src/`
+   - Agrega la declaración básica del módulo:
+     ```typescript
+     declare module 'chat-assistant-gemini' {
+       import { Component } from 'solid-js';
+       
+       export interface ChatConfig {
+         useBackend?: boolean;
+         backendUrl?: string;
+         apiKey?: string;
+         model?: 'gemini-2.5-flash' | 'gemini-2.5-pro' | 'gemini-1.5-flash' | 'gemini-1.5-pro' | 'gemini-pro';
+         position?: 'left' | 'right';
+         buttonColor?: string;
+       }
+       
+       export interface FloatingChatProps {
+         config: ChatConfig;
+       }
+       
+       const FloatingChat: Component<FloatingChatProps>;
+       export default FloatingChat;
+     }
+     ```
+
+**Nota:** Los archivos `.d.ts` en la carpeta `src/` son incluidos automáticamente por TypeScript según la configuración del `tsconfig.json`.
+
+### Error de tipos incompatibles en objetos de configuración
+
+Si encuentras un error similar a:
+```
+El tipo 'string' no se puede asignar al tipo '"left" | "right" | undefined'
+```
+
+Este error ocurre cuando TypeScript infiere un tipo más general (como `string`) en lugar del tipo literal específico que espera la interfaz.
+
+**Solución:**
+
+1. **Opción 1 (Recomendada):** Añade el tipo explícito al objeto:
+   ```typescript
+   import FloatingChat, { ChatConfig } from 'chat-assistant-gemini';
+   
+   const config: ChatConfig = {
+     useBackend: false,
+     apiKey: 'TU_API_KEY',
+     model: 'gemini-2.5-flash',
+     position: 'right', // Ahora TypeScript sabe que es 'left' | 'right'
+     buttonColor: '#6366f1'
+   };
+   
+   <FloatingChat config={config} />
+   ```
+
+2. **Opción 2:** Usa `as const` para el valor específico:
+   ```typescript
+   const config = {
+     useBackend: false,
+     apiKey: 'TU_API_KEY',
+     model: 'gemini-2.5-flash' as const,
+     position: 'right' as const,
+     buttonColor: '#6366f1'
+   };
+   ```
+
+### Error "No se puede encontrar el archivo de definición de tipo"
+
+Si encuentras errores como:
+```
+No se puede encontrar el archivo de definición de tipo para 'solid-js/jsx'
+No se puede encontrar el archivo de definición de tipo para 'nombre-paquete'
+```
+
+Este error ocurre cuando la propiedad `types` en `tsconfig.json` está limitando qué tipos TypeScript puede incluir automáticamente.
+
+**Solución:**
+
+1. Abre el archivo `tsconfig.json`
+2. Elimina las referencias innecesarias del array `types`:
+   ```json
+   {
+     "compilerOptions": {
+       "types": ["vite/client"]
+     }
+   }
+   ```
+   
+3. **Regla general:** Solo incluye en `types` los paquetes que NO se importan explícitamente en tu código:
+   - ❌ No incluyas: `"solid-js"`, `"solid-js/jsx"`, `"react"`, etc. (se importan en el código)
+   - ✅ Sí incluye: `"vite/client"`, `"node"`, etc. (tipos ambientales/globales)
+
+**Por qué funciona:** Cuando especificas el array `types`, TypeScript solo incluye esos tipos específicos y deshabilita la inclusión automática. Al eliminar referencias como `"solid-js/jsx"`, permites que TypeScript las resuelva automáticamente desde los paquetes instalados.
+
+### Error "React is not defined" con módulos de SolidJS desde node_modules
+
+Si encuentras un error en la consola:
+```
+Uncaught ReferenceError: React is not defined
+    at FloatingChat (chat-assistant-gemini.js:...)
+```
+
+Este error ocurre cuando el módulo construido con SolidJS (archivos `.jsx`) no está siendo procesado correctamente por Vite, y Vite lo interpreta como JSX de React.
+
+**Solución:**
+
+1. Abre el archivo `vite.config.ts` o `vite.config.js`
+2. Configura `vite-plugin-solid` para incluir los archivos JSX del módulo:
+   ```typescript
+   import { defineConfig } from 'vite';
+   import solidPlugin from 'vite-plugin-solid';
+   
+   export default defineConfig({
+     plugins: [
+       solidPlugin({
+         extensions: ['.jsx', '.tsx', '.js', '.ts']
+       })
+     ],
+     optimizeDeps: {
+       exclude: ['chat-assistant-gemini']
+     },
+     ssr: {
+       noExternal: ['chat-assistant-gemini']
+     },
+     resolve: {
+       conditions: ['solid', 'browser', 'development']
+     }
+   });
+   ```
+   
+   **Claves importantes:**
+   - `extensions`: Permite que el plugin procese todas las extensiones JSX/JS
+   - `optimizeDeps.exclude`: Previene el pre-bundling del módulo
+   - `ssr.noExternal`: Fuerza a Vite a procesar el módulo como ESM
+   - `resolve.conditions`: Prioriza las condiciones de Solid
+
+3. Reinicia el servidor de desarrollo:
+   ```bash
+   # Detener el servidor actual (Ctrl+C)
+   pnpm dev
+   ```
+
+**Por qué funciona:** Por defecto, Vite no procesa archivos en `node_modules` con el plugin de Solid. Al configurar estas opciones, Vite procesa los archivos JSX del módulo como SolidJS en lugar de React. El `exclude` en `optimizeDeps` previene que Vite pre-bundle el módulo, permitiendo que sea transformado correctamente.
+
 ## 📦 ¿Qué incluye?
 
 ```

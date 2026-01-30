@@ -16,7 +16,7 @@ const chatConfig = {
   // backendUrl: '/api/gemini', // URL de tu endpoint
   
   // ===== Configuración general =====
-  model: '', // Modelo por defecto
+  model: 'gemini-2.5-flash', // Modelo por defecto
   position: 'right', // Posición del botón flotante: 'right' o 'left'
   buttonColor: '#0072ff', // Color del botón flotante
 };

@@ -1,5 +1,29 @@
 # Resumen de Cambios Aplicados al Módulo
 
+## 📦 Versión 1.2.1 (29 enero 2026)
+
+### Mejoras en Documentación
+
+**README.md actualizado:**
+- ✅ Todos los imports ahora incluyen `ChatConfig` para mejor tipado TypeScript
+  ```jsx
+  import FloatingChat, { ChatConfig } from 'chat-assistant-gemini';
+  ```
+- ✅ Nueva sección "⚙️ Configuración Inicial (IMPORTANTE)" añadida después de instalación
+- ✅ Pasos detallados para configurar `vite.config.js` con todas las opciones necesarias
+- ✅ Guía completa sobre posicionamiento correcto del componente flotante
+- ✅ Ejemplos de código correcto vs incorrecto con emojis visuales
+- ✅ Advertencias claras sobre errores comunes y cómo evitarlos
+- ✅ Instrucciones de reinicio del servidor de desarrollo
+
+**Cambios específicos en README:**
+1. Sección "Configurar vite.config.js/ts" con configuración completa
+2. Sección "Posicionar el componente correctamente" con ejemplos visuales
+3. Todos los ejemplos de código usan tipado explícito: `const chatConfig: ChatConfig = {...}`
+4. 4 actualizaciones de imports en diferentes secciones del README
+
+---
+
 ## ✅ Todos los cambios del problems.md han sido aplicados
 
 ### 1. Soporte para TypeScript ✅
